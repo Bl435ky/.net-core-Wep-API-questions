@@ -1,0 +1,211 @@
+What are the two approaches to creating APIs in ASP.NET Core?
+Controller-based APIs and minimal APIs.
+How do controllers in an API project typically take dependencies?
+Controllers take dependencies via constructor injection or property injection.
+What is the purpose of minimal APIs in ASP.NET Core?
+Minimal APIs simplify API development by focusing on configuration and extensibility via extension methods and lambda expressions.
+What is the primary difference between controller-based APIs and minimal APIs in terms of structure?
+Controller-based APIs use classes that derive from ControllerBase, whereas minimal APIs define endpoints with logical handlers using lambdas or methods, without explicit controller classes.
+How do minimal APIs support dependency injection?
+Minimal APIs access the service provider directly or use other approaches to achieve dependency injection.
+Provide a sample code structure for a controller-based API project in ASP.NET Core.
+The sample structure includes the creation of a WebApplication object, adding controller services, and mapping the controllers via app.MapControllers().
+How are endpoints defined in a minimal API project?
+Endpoints are defined in-line using lambda expressions, for example, app.MapGet("/route", handler).
+How can a WeatherForecast API be implemented using controllers?
+A WeatherForecastController class is created that defines a Get method to return an array of weather forecasts using a predefined set of summaries and random data.
+How does the minimal API approach define routes and logic?
+Routes and logic are defined inline using app.MapGet() and lambda functions without separate controller classes.
+What class is used in both API approaches to represent weather data?
+The WeatherForecast class.
+How does the TemperatureF property calculate the Fahrenheit value in the WeatherForecast class?
+The formula used is 32 + (int)(TemperatureC / 0.5556).
+What are some capabilities that minimal APIs share with controller-based APIs?
+Both support scaling to multiple APIs, handling complex routes, applying authorization, and controlling API response content.
+What are some features not supported by minimal APIs?
+Features like built-in model binding, validation, application parts, custom conventions, view rendering, and OData are not supported by minimal APIs.
+What is the IModelBinderProvider in ASP.NET Core?
+It's an interface used to provide model binders in a controller-based API.
+What is the purpose of the IModelValidator in a controller-based API?
+It provides validation logic for models.
+Why are Razor Pages recommended for rendering views instead of minimal APIs?
+Minimal APIs do not support view rendering, while Razor Pages are designed for that purpose.
+What is the JsonPatch operation, and why isn’t it supported by minimal APIs?
+JsonPatch is used to partially update JSON objects, and minimal APIs lack built-in support for it.
+In a web API, why should controllers derive from ControllerBase?
+ControllerBase provides essential methods for handling HTTP requests without the overhead of view rendering, which is unnecessary for APIs.
+What additional functionality does the Controller class provide compared to ControllerBase?
+The Controller class adds support for views, which is useful for web pages but not for APIs.
+How does the CreatedAtAction method in a controller handle HTTP responses?
+It returns a 201 status code and a link to the newly created resource.
+What does the BadRequest method return in ASP.NET Core controllers?
+It returns a 400 status code, indicating a bad request.
+What is the purpose of the NotFound method in a controller-based API?
+It returns a 404 status code when a requested resource cannot be found.
+How does the [ApiController] attribute change controller behavior?
+It enforces attribute routing, automatic 400 responses for validation errors, and binding source inference.
+What does attribute routing enforce when using [ApiController] in ASP.NET Core?
+It requires all routes to be defined using attributes like [Route].
+How does the [HttpGet] attribute work in a controller-based API?
+It maps an action method to the HTTP GET verb.
+What is the role of the [Consumes] attribute in an API controller?
+It specifies the types of data that an action can accept, such as JSON or XML.
+How does the [Produces] attribute define the return data type of a controller action?
+It specifies the types of data that the action will return, such as JSON or XML.
+How does automatic HTTP 400 response handling work with the [ApiController] attribute?
+Validation errors trigger an automatic HTTP 400 response without needing explicit checks in the code.
+Why is the ModelStateInvalidFilter used in ASP.NET Core MVC?
+It checks for model validation errors and automatically returns a 400 status if validation fails.
+What is the ValidationProblemDetails object used for in ASP.NET Core?
+It provides a standardized format for validation errors in web API responses.
+How can you log automatic 400 responses in an API controller?
+By configuring the InvalidModelStateResponseFactory delegate to log validation errors before the 400 response is returned.
+How can you disable the automatic HTTP 400 response behavior in a controller?
+Set SuppressModelStateInvalidFilter to true in ApiBehaviorOptions.
+What is binding source parameter inference in ASP.NET Core?
+ASP.NET Core infers the binding source for action parameters based on their type and usage.
+What is the role of the [FromBody] attribute in API controller parameters?
+It specifies that the parameter's value should be read from the body of the HTTP request.
+What types of parameters should use the [FromRoute] attribute?
+Parameters whose values are part of the URL route.
+How does [FromQuery] handle query string parameters in an API action?
+It binds action method parameters to query string values in the URL.
+What is inferred by the [FromServices] attribute in ASP.NET Core?
+It indicates that a parameter should be provided by dependency injection.
+How can you prevent automatic binding source inference for a specific parameter?
+By explicitly applying a binding attribute, such as [FromBody] or [FromQuery], to the parameter.
+How can automatic binding source inference be disabled globally in an ASP.NET Core application?
+Set DisableImplicitFromServicesParameters to true in ApiBehaviorOptions.
+How does the ASP.NET Core runtime handle complex object binding by default?
+It attempts to bind complex objects from multiple sources, such as query strings and route data, unless a specific binding source is defined.
+How can you disable automatic DI for parameters in a controller action?
+By applying a binding source attribute (e.g., [FromBody]) to the parameter.
+What is the role of the IServiceProviderIsService in ASP.NET Core?
+It checks at app startup whether an argument in a controller action comes from DI or other sources.
+What is the significance of BindingInfo.BindingSource when handling parameter binding?
+It ensures that once a binding source is set, it is not overwritten during parameter binding.
+How does ASP.NET Core assign BindingSource.Query to parameters?
+Parameters that are not matched to routes, services, or the request body are assigned BindingSource.Query.
+What is the SuppressInferBindingSourcesForParameters property used for?
+It disables automatic inference of binding sources for parameters.
+How does ASP.NET Core infer the binding source for complex types not registered in the DI container?
+It infers BindingSource.Body for such types.
+What is the purpose of the SuppressModelStateInvalidFilter in API behavior options?
+It disables the automatic model validation check that triggers a 400 response.
+How does the SuppressMapClientErrors property affect error mapping in API behavior?
+It prevents automatic mapping of client errors, allowing custom error responses.
+How can you map custom client error links, such as for 404 errors, in ASP.NET Core?
+By setting ClientErrorMapping[StatusCodes.Status404NotFound].Link to a custom URL.
+How do minimal APIs handle complex routes and authorization in ASP.NET Core?
+Minimal APIs support defining complex routes and applying authorization through middleware and route handlers, similar to controller-based APIs.
+What does the [ApiController] attribute infer for IFormFile and IFormFileCollection parameters?
+It infers that the multipart/form-data request content type should be used.
+How can you disable the default behavior of inferring multipart/form-data for IFormFile parameters?
+By setting SuppressConsumesConstraintForFormFileParameters to true in ApiBehaviorOptions.
+What property disables automatic inference of parameter binding sources in ASP.NET Core?
+SuppressInferBindingSourcesForParameters.
+What property disables automatic model validation error responses in ASP.NET Core APIs?
+SuppressModelStateInvalidFilter.
+How do you map a custom link for a 404 status code in ASP.NET Core?
+By setting ClientErrorMapping[StatusCodes.Status404NotFound].Link to a custom URL.
+What type does MVC return for an error status code 400 or higher?
+ProblemDetails based on RFC 7807 specification.
+What HTTP status code does NotFound() return?
+It returns a 404 status code.
+What type of response body does the NotFound() method generate?
+It generates a ProblemDetails body in the response.
+How do you disable automatic ProblemDetails creation for error status codes?
+By setting SuppressMapClientErrors to true in ApiBehaviorOptions.
+What attribute allows an action or controller to specify supported request content types?
+The [Consumes] attribute.
+What happens if a request with a content type not supported by an action is received?
+A 415 Unsupported Media Type response is returned.
+How do you limit an action to only handle application/xml content types?
+By applying the [Consumes("application/xml")] attribute to the action.
+What status code is returned if a request does not specify the correct content type required by the [Consumes] attribute?
+A 415 Unsupported Media Type status code.
+How does the [Consumes] attribute influence request selection in ASP.NET Core?
+It applies a type constraint based on the incoming request's content type.
+What content type is required for the PostJson action in the example provided?
+application/json.
+What content type is required for the PostForm action in the provided example?
+application/x-www-form-urlencoded.
+What would happen if both PostJson and PostForm actions didn’t use the [Consumes] attribute and shared the same route?
+An ambiguous match exception would be thrown.
+What is the purpose of the [Consumes] attribute in the ConsumesController example?
+It allows both actions to handle the same route with different content types without causing a route conflict.
+What is the URL route for both PostJson and PostForm in the ConsumesController example?
+They both handle requests sent to https://localhost:5001/api/Consumes.
+How does the [Consumes] attribute prevent ambiguous matches between actions in ASP.NET Core?
+By applying a type constraint based on the request's content type, ensuring each action handles only its specified content type.
+General Return Types in ASP.NET Core
+
+What are the four primary controller action return types in ASP.NET Core?
+Specific type, IActionResult, ActionResult<T>, and HttpResults.
+When is it most appropriate to use a specific type as a return type in ASP.NET Core?
+When the action returns a primitive or complex data type and no multiple return types or error handling is required.
+What is an example of a specific return type in ASP.NET Core?
+Task<List<Product>> is a specific return type for returning a collection of Product objects.
+When should IActionResult or ActionResult<T> be used in controller actions?
+When multiple return types, such as different HTTP status codes, are possible.
+Why is returning IEnumerable<T> not always recommended in ASP.NET Core?
+ASP.NET Core buffers the result of actions returning IEnumerable<T> before writing them to the response.
+What is the benefit of using IAsyncEnumerable<T> instead of IEnumerable<T> in ASP.NET Core?
+IAsyncEnumerable<T> ensures asynchronous iteration, preventing buffering and improving performance.
+How does System.Text.Json handle the result of actions returning IEnumerable<T>?
+It supports streaming the result instead of buffering it.
+IActionResult and ActionResult<T>
+
+What is IActionResult typically used for in ASP.NET Core?
+It is used when an action can return different HTTP status codes or result types.
+Give an example of a shorthand method to return a BadRequest in ASP.NET Core.
+return BadRequest(); is shorthand for return new BadRequestResult();.
+What attribute helps describe possible HTTP responses for a web API action?
+[ProducesResponseType] attribute.
+In which scenarios is [ProducesResponseType] used?
+When the action has multiple return types, making it necessary to specify the HTTP status codes and response types.
+What HTTP status code does the NotFound method return?
+404.
+What HTTP status code does the Ok method return?
+200.
+Synchronous and Asynchronous Actions
+
+What would a synchronous action return if a product is not found in the database?
+A 404 status code with NotFound().
+What would a synchronous action return if a product is found?
+A 200 status code with Ok(product).
+What does a 201 status code represent in ASP.NET Core?
+The resource has been successfully created.
+What does the CreatedAtAction method do in an action?
+It returns a 201 status code and includes the location of the newly created resource.
+In the asynchronous action example, what happens if a product's description contains "XYZ Widget"?
+The action returns a 400 status code with BadRequest().
+How does ASP.NET Core handle model validation errors in actions with the [ApiController] attribute?
+It automatically returns a 400 status code for model validation failures.
+ActionResult<T> vs IActionResult
+
+What is a key advantage of using ActionResult<T> over IActionResult?
+The [ProducesResponseType] attribute's Type property can be excluded, simplifying the response metadata.
+Why does ActionResult<T> offer better type inference than IActionResult?
+Because of implicit cast operators that support the conversion of both T and ActionResult to ActionResult<T>.
+What happens if an action returns IEnumerable<T> in combination with ActionResult<T>?
+Conversion to a concrete type like List<T> is required to use ActionResult<T>.
+What status codes are returned in a synchronous action with ActionResult<Product> if the product is found or not found?
+200 if the product is found, 404 if the product is not found.
+What are the two possible return types in the asynchronous action with ActionResult<Product>?
+A 201 status code for a created product and a 400 status code for a bad request.
+HttpResults and IResult
+
+What are HttpResults in ASP.NET Core?
+They are a result implementation processed by IResult.ExecuteAsync, used in both Minimal APIs and Web APIs.
+How do HttpResults differ from MVC-specific result types?
+They don’t leverage configured formatters or support content negotiation.
+What is the role of the IResult interface in ASP.NET Core?
+It defines a contract representing the result of an HTTP endpoint.
+What does the Results.Ok<T>() method return in an action?
+A 200 status code with the corresponding object in the response body.
+What method is used to return a 404 status code using IResult?
+Results.NotFound().
+What advantage do Results<TResult1, TResultN> union types offer in ASP.NET Core?
+They automatically retain endpoint metadata and provide compile-time checking for declared return types.
+ 
